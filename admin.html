@@ -1,0 +1,1522 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M5CR3ZM5');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Metadata -->
+    <title>Leads Administration | The Roofing Advisor</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <style>
+      /* Client-only transitions */
+      .fade-enter {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      .fade-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen bg-slate-50 font-sans antialiased text-slate-800">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5CR3ZM5"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Sticky Header -->
+    <header id="site-header" class="sticky top-0 bg-primary text-white z-40 transition shadow-md border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        
+        <!-- Logo / Branding -->
+        <a href="/" class="flex items-center gap-2.5 group">
+          <div class="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:bg-accent-light transition">
+            <svg class="w-6 h-6 stroke-white" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 14l9-9 9 9M17 5v5M9 14l2.5 2.5 4-4" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-heading font-extrabold text-lg leading-tight tracking-tight text-white group-hover:text-accent transition">The Roofing Advisor</span>
+            <span class="text-[10px] text-slate-350 font-mono tracking-wider -mt-0.5">U.S. LEAD DATABASE</span>
+          </div>
+        </a>
+
+        <!-- Logged In Controls (shown only when authenticated) -->
+        <div id="header-controls" class="hidden flex items-center gap-4">
+          <button id="admin-logout-btn" class="bg-primary-light hover:bg-slate-800 text-slate-200 hover:text-white px-4 py-2 rounded-lg text-xs font-semibold border border-white/10 transition flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN ROOT CONTAINER -->
+    <main id="main-content" class="flex-grow flex items-center justify-center p-4">
+      
+      <!-- LOADING SPINNER (initial state) -->
+      <div id="initial-loading" class="text-center py-12">
+        <div class="relative w-14 h-14 mx-auto mb-4">
+          <div class="absolute inset-0 border-4 border-slate-200 rounded-full"></div>
+          <div class="absolute inset-0 border-4 border-t-accent rounded-full animate-spin"></div>
+        </div>
+        <p class="text-sm text-slate-500 font-mono">Securing Administrative Shell...</p>
+      </div>
+
+      <!-- PASSWORD GATE FORM CONTAINER -->
+      <div id="login-gate" class="hidden w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden animate-fade-in-up">
+        <!-- Brand banner header -->
+        <div class="bg-primary text-white p-8 text-center relative border-b border-primary-dark">
+          <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+          <div class="relative z-10 space-y-2">
+            <div class="inline-flex w-12 h-12 bg-accent/20 rounded-2xl items-center justify-center text-accent mb-1 border border-accent/20">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+            </div>
+            <h1 class="text-xl font-heading font-black tracking-tight">Operator Authentication</h1>
+            <p class="text-slate-300 text-xs">Access restricted to authorized general partners</p>
+          </div>
+        </div>
+        
+        <!-- Login fields -->
+        <form id="admin-login-form" class="p-8 space-y-6">
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-widest" for="admin-password">Administrative Password</label>
+            <div class="relative">
+              <input 
+                id="admin-password" 
+                type="password" 
+                required 
+                placeholder="Enter system access password" 
+                class="w-full pl-4 pr-10 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-accent focus:border-accent text-slate-900 bg-slate-50 placeholder-slate-400 transition font-mono" 
+                autofocus
+              />
+              <button 
+                type="button" 
+                id="toggle-password-btn" 
+                class="absolute right-3.5 top-3.5 text-slate-450 hover:text-slate-700 transition cursor-pointer"
+                title="Toggle password visibility"
+              >
+                <svg id="eye-icon-open" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                <svg id="eye-icon-closed" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" /></svg>
+              </button>
+            </div>
+            <div id="login-error" class="hidden text-xs text-red-600 font-bold flex items-center gap-1.5 pt-1">
+              <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              Invalid security credential.
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer text-base">
+            Decrypt and Authenticate
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- WORKSPACE DASHBOARD (shown only when unlocked) -->
+      <div id="admin-workspace" class="hidden w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in-up">
+        
+        <!-- Welcome banner -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-150 shadow-sm">
+          <div>
+            <h2 class="text-2xl font-heading font-black text-primary tracking-tight">Advisor Lead Desk</h2>
+            <p class="text-slate-500 text-xs mt-0.5">Real-time homeowner inquiries & routing stats across the United States</p>
+          </div>
+          
+          <div class="flex items-center gap-3 w-full md:w-auto">
+            <button id="btn-export-csv" class="bg-white hover:bg-slate-550 hover:text-white text-slate-700 font-bold text-xs py-2.5 px-4.5 rounded-lg border border-slate-200 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+              <svg class="w-4 h-4 text-slate-500 hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
+            <button id="btn-demo-seed" class="bg-white hover:bg-slate-550 hover:text-white text-slate-700 font-bold text-xs py-2.5 px-4.5 rounded-lg border border-slate-200 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer" title="Load sample USA leads for demo">
+              <svg class="w-4 h-4 text-slate-500 hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"/></svg>
+              Replenish Samples
+            </button>
+            <button id="btn-reset-leads" class="bg-red-50 hover:bg-red-600 hover:text-white text-red-600 font-bold text-xs py-2.5 px-4.5 rounded-lg border border-red-150 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              Wipe Database
+            </button>
+          </div>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Stat 1 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-150 shadow-sm flex items-center gap-4 hover:border-accent transition duration-200">
+            <div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center text-primary">
+              <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            </div>
+            <div>
+              <span class="block text-slate-400 text-[10px] font-bold uppercase tracking-wider">Total Raw Leads</span>
+              <span id="stat-total-leads" class="text-2xl font-black text-slate-900 font-heading">0</span>
+            </div>
+          </div>
+
+          <!-- Stat 2 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-150 shadow-sm flex items-center gap-4 hover:border-accent transition duration-200">
+            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-red-600">
+              <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            </div>
+            <div>
+              <span class="block text-slate-400 text-[10px] font-bold uppercase tracking-wider">Urgent / ASAP</span>
+              <span id="stat-urgent-leads" class="text-2xl font-black text-slate-900 font-heading">0</span>
+            </div>
+          </div>
+
+          <!-- Stat 3 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-150 shadow-sm flex items-center gap-4 hover:border-accent transition duration-200">
+            <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
+              <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16v1m-3.411-2.433A5.002 5.002 0 0010 17h4a5.002 5.002 0 004.589-4.567M3 12a10 10 0 1020 0 10 10 0 00-20 0z" /></svg>
+            </div>
+            <div>
+              <span class="block text-slate-400 text-[10px] font-bold uppercase tracking-wider">Est. Lead Sales Volume</span>
+              <span id="stat-sales-volume" class="text-2xl font-black text-slate-900 font-heading">$0</span>
+            </div>
+          </div>
+
+          <!-- Stat 4 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-150 shadow-sm flex items-center gap-4 hover:border-accent transition duration-200">
+            <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600">
+              <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+            </div>
+            <div>
+              <span class="block text-slate-400 text-[10px] font-bold uppercase tracking-wider">Verified State Coverage</span>
+              <span id="stat-state-coverage" class="text-2xl font-black text-slate-900 font-heading">0 States</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PORTAL WORKSPACE NAV TABS -->
+        <div class="flex border-b border-slate-200 gap-2">
+          <button id="tab-btn-leads" class="border-b-2 border-accent text-accent font-bold pb-4 px-6 text-sm flex items-center gap-2 transition duration-155 cursor-pointer">
+            <svg class="w-4.5 h-4.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Homeowner Estimate Leads
+            <span id="badge-leads-count" class="bg-accent/15 text-accent text-[11px] font-black px-2.5 py-0.5 rounded-full text-center">0</span>
+          </button>
+          
+          <button id="tab-btn-messages" class="border-b-2 border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-350 font-semibold pb-4 px-6 text-sm flex items-center gap-2 transition duration-155 cursor-pointer">
+            <svg class="w-4.5 h-4.5 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Contact Request Messages
+            <span id="badge-messages-count" class="bg-slate-100 text-slate-500 text-[11px] font-bold px-2.5 py-0.5 rounded-full text-center">0</span>
+          </button>
+        </div>
+
+        <!-- LEADS VIEW CONTAINER -->
+        <div id="leads-view-container" class="space-y-6 animate-fade-in-up">
+          <!-- LEAD CONTROL TOOLBAR: SEARCH & CHANNELS -->
+          <div class="bg-white rounded-2xl border border-slate-150 p-6 shadow-sm space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              
+              <!-- Searching -->
+              <div class="md:col-span-5 relative">
+                <span class="absolute left-3 top-3 text-slate-400">
+                  <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </span>
+                <input 
+                  id="search-input" 
+                  type="text" 
+                  placeholder="Search leads by name, email, phone, city, state, or zip..." 
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-accent focus:border-accent text-sm text-slate-900 placeholder-slate-400 bg-slate-55 transition"
+                />
+              </div>
+
+              <!-- Project Type filter -->
+              <div class="md:col-span-3">
+                <select id="filter-project" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-accent focus:border-accent text-sm text-slate-700 bg-slate-55 transition">
+                  <option value="all">All Request Types</option>
+                  <option value="replacement">Full Replacement</option>
+                  <option value="repair">Minor Repair</option>
+                  <option value="inspection">Inspection / Certification</option>
+                  <option value="exit">Exit Intent Popup</option>
+                </select>
+              </div>
+
+              <!-- Timeline filter -->
+              <div class="md:col-span-3">
+                <select id="filter-timeline" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-accent focus:border-accent text-sm text-slate-700 bg-slate-55 transition">
+                  <option value="all">All Timelines</option>
+                  <option value="asap">ASAP / Emergency</option>
+                  <option value="month">Within 1 Month</option>
+                  <option value="researching">Just Researching</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-1 text-right">
+                <button id="btn-clear-filters" class="text-xs font-bold text-slate-555 hover:text-accent transition underline cursor-pointer">Clear</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- TABLE WORKSPACE -->
+          <div class="bg-white rounded-2xl border border-slate-150 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse font-sans">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-150 text-[10px] font-bold uppercase tracking-widest text-slate-450">
+                    <th class="px-6 py-4">Homeowner Identity</th>
+                    <th class="px-6 py-4">Phone Contact</th>
+                    <th class="px-6 py-4">Email Contact</th>
+                    <th class="px-6 py-4">Geography (State & City)</th>
+                    <th class="px-6 py-4">Requested Service</th>
+                    <th class="px-6 py-4 font-mono">Size</th>
+                    <th class="px-6 py-4">Timeline</th>
+                    <th class="px-6 py-4">Time Received</th>
+                    <th class="px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="leads-table-body" class="divide-y divide-slate-100">
+                  <!-- Javascript will inject table rows securely -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACT MESSAGES VIEW CONTAINER -->
+        <div id="messages-view-container" class="hidden space-y-6 animate-fade-in-up">
+          
+          <!-- MESSAGE CONTROL TOOLBAR: SEARCH & SUBJECTS -->
+          <div class="bg-white rounded-2xl border border-slate-150 p-6 shadow-sm space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              
+              <!-- Searching -->
+              <div class="md:col-span-7 relative">
+                <span class="absolute left-3 top-3 text-slate-400">
+                  <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </span>
+                <input 
+                  id="message-search-input" 
+                  type="text" 
+                  placeholder="Search messages by name, email, phone, subject, or message content..." 
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-accent focus:border-accent text-sm text-slate-900 placeholder-slate-400 bg-slate-55 transition"
+                />
+              </div>
+
+              <!-- Subject filter -->
+              <div class="md:col-span-4">
+                <select id="filter-message-subject" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-accent focus:border-accent text-sm text-slate-700 bg-slate-55 transition">
+                  <option value="all">All Inquiry Subjects</option>
+                  <option value="General Support">General Tool Questions</option>
+                  <option value="Builder Partner Program">Contractor & Builder Partnerships</option>
+                  <option value="Data Inquiry">Pricing Index Correction / Update</option>
+                  <option value="Privacy Concern">Privacy or Personal Data Removal</option>
+                  <option value="Advertising">Advertising or Sponsorship Opportunity</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-1 text-right">
+                <button id="btn-clear-message-filters" class="text-xs font-bold text-slate-555 hover:text-accent transition underline cursor-pointer">Clear</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- MESSAGES TABLE -->
+          <div class="bg-white rounded-2xl border border-slate-150 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse font-sans">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-150 text-[10px] font-bold uppercase tracking-widest text-slate-450">
+                    <th class="px-6 py-4">Sender Identity</th>
+                    <th class="px-6 py-4">Phone</th>
+                    <th class="px-6 py-4">Email Address</th>
+                    <th class="px-6 py-4">Topic / Subject</th>
+                    <th class="px-6 py-4">ZIP & Area</th>
+                    <th class="px-6 py-4">Time Received</th>
+                    <th class="px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="messages-table-body" class="divide-y divide-slate-100">
+                  <!-- Javascript will inject rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- LEAD DETAIL COMPREHENSIVES MODAL -->
+    <div id="lead-modal" class="hidden fixed inset-0 bg-primary/40 backdrop-blur-xs z-50 items-center justify-center p-4 transition-all duration-300">
+      <div class="modal-overlay absolute inset-0"></div>
+      
+      <!-- Content Panel -->
+      <div class="bg-white rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden relative z-10 border border-slate-150 animate-fade-in-up">
+        
+        <!-- Dismiss button -->
+        <button id="close-lead-modal-btn" class="absolute right-5 top-5 text-slate-400 hover:text-slate-750 transition p-2 cursor-pointer z-10">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div id="lead-modal-details" class="p-6 md:p-8">
+          <!-- Dynamically Populated JS -->
+        </div>
+
+        <div class="bg-slate-50 border-t border-slate-100 p-4 px-6 flex justify-end gap-3 rounded-b-3xl">
+          <button id="btn-close-lead-modal-bottom" class="bg-primary hover:bg-primary-dark text-white font-bold text-xs py-2 px-6 rounded-lg transition shadow-sm cursor-pointer border border-primary">
+            Dismiss Card
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+        <!-- Global Footer -->
+    <footer class="bg-primary-dark text-slate-305 pt-16 pb-12 mt-auto border-t border-white/5 font-sans text-slate-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Brand Row -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/5">
+          <div class="space-y-4">
+            <a href="/" class="flex items-center gap-2.5">
+              <div class="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-white font-bold text-xl">
+                <svg class="w-6 h-6 stroke-white" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 14l9-9 9 9M17 5v5M9 14l2.5 2.5 4-4" />
+                </svg>
+              </div>
+              <span class="font-heading font-extrabold text-lg text-white tracking-tight">The Roofing Advisor</span>
+            </a>
+            <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+              Your comprehensive, unbiased resource hub for roofing replacement costs. Restoring trust in home services contractor selection.
+            </p>
+            <div class="flex items-center gap-2 pt-2 select-none">
+              <!-- Secure Lock badge -->
+              <svg class="w-4 h-4 text-emerald-500 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
+              <span class="text-[10px] text-slate-400 font-mono tracking-wide uppercase font-bold">Your Information Is Secure</span>
+            </div>
+          </div>
+
+          <!-- Column 2: Interactive Cost Estimators -->
+          <div class="space-y-3">
+            <h4 class="font-heading font-bold text-xs uppercase tracking-widest text-slate-400">Interactive Tools</h4>
+            <ul class="space-y-2 text-xs text-slate-350">
+              <li><a href="/roofing-cost-calculator/" class="hover:text-accent transition">Roof Replacement Estimator</a></li>
+              <li><a href="/roof-square-foot-calculator/" class="hover:text-accent transition">Pitch &amp; Pitch Multiplier Tool</a></li>
+              <li><a href="/get-estimates/" class="hover:text-accent transition">Contractor Bid Connector</a></li>
+              <li><a href="/cost-guides/" class="hover:text-accent transition">Tear-Off Fee Index</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: National Cost Resource Guides / Cost Guides Hub -->
+          <div class="space-y-3">
+            <h4 class="font-heading font-bold text-xs uppercase tracking-widest text-slate-400">Cost Guides Hub</h4>
+            <ul class="space-y-2 text-xs text-slate-350">
+              <li><a href="/how-much-does-a-new-roof-cost/" class="hover:text-accent transition">How Much is a New Roof?</a></li>
+              <li><a href="/asphalt-shingle-roof-cost/" class="hover:text-accent transition">Asphalt Shingles Pricing Guide</a></li>
+              <li><a href="/metal-vs-tile-roof/" class="hover:text-accent transition">Metal vs Tile Roof Breakdown</a></li>
+              <li><a href="/roof-cost-by-state/" class="hover:text-accent transition">Roof Costs by State Sizing</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Contact & General Support -->
+          <div class="space-y-3">
+            <h4 class="font-heading font-bold text-xs uppercase tracking-widest text-slate-400">Direct Support</h4>
+            <p class="text-xs text-slate-300">Have questions about listings or contractor vetting procedures?</p>
+            <div class="flex flex-col gap-1.5 text-xs font-semibold text-slate-300 pt-1">
+              <a href="/contact/" class="hover:text-accent font-semibold flex items-center gap-1 text-slate-200">
+                <span>Contact Us</span> &rarr;
+              </a>
+              <span class="block">Email: contact@theroofingadvisor.com</span>
+              <span class="block text-slate-400 text-[10px]">Mon-Fri: 8:00 AM - 6:00 PM EST</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Compliance disclosures & Copyright -->
+        <div class="border-t border-white/5 pt-8 text-center sm:text-left space-y-6">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+            <span>&copy; 2026 TheRoofingAdvisor.com. All Rights Reserved..</span>
+            <div class="flex gap-4 flex-wrap justify-center sm:justify-end">
+              <a href="/about/" class="hover:underline hover:text-slate-300">About Us</a>
+              <span>•</span>
+              <a href="/editorial-policy/" class="hover:underline hover:text-slate-300">Editorial Policy</a>
+              <span>•</span>
+              <a href="/cost-methodology/" class="hover:underline hover:text-slate-300">Cost Methodology</a>
+              <span>•</span>
+              <a href="/privacy-policy/" class="hover:underline hover:text-slate-300">Privacy Policy</a>
+              <span>•</span>
+              <a href="/terms-of-use/" class="hover:underline hover:text-slate-300">Terms of Use</a>
+              <span>•</span>
+              <a href="/disclaimer/" class="hover:underline hover:text-slate-300">Licensing Disclaimer</a>
+              <span>•</span>
+              <a href="/sitemap.xml" class="hover:underline hover:text-slate-300">Sitemap</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- ADMINISTRATIVE JAVASCRIPT SYSTEM ENGINE -->
+    <script type="module">
+      // 1. Password credentials check and session handling
+      document.addEventListener('DOMContentLoaded', () => {
+        const initialLoading = document.getElementById('initial-loading');
+        const loginGate = document.getElementById('login-gate');
+        const adminWorkspace = document.getElementById('admin-workspace');
+        const headerControls = document.getElementById('header-controls');
+        
+        const loginForm = document.getElementById('admin-login-form');
+        const passwordInput = document.getElementById('admin-password');
+        const togglePasswordBtn = document.getElementById('toggle-password-btn');
+        const eyeOpen = document.getElementById('eye-icon-open');
+        const eyeClosed = document.getElementById('eye-icon-closed');
+        const loginError = document.getElementById('login-error');
+        
+        const logoutBtn = document.getElementById('admin-logout-btn');
+
+        // Check password toggle
+        togglePasswordBtn.addEventListener('click', () => {
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeOpen.classList.add('hidden');
+            eyeClosed.classList.remove('hidden');
+          } else {
+            passwordInput.type = 'password';
+            eyeOpen.classList.remove('hidden');
+            eyeClosed.classList.add('hidden');
+          }
+        });
+
+        // Check dynamic login status
+        const isAuth = sessionStorage.getItem('tra_admin_authenticated') === 'true';
+        setTimeout(() => {
+          initialLoading.classList.add('hidden');
+          if (isAuth) {
+            showWorkspace();
+          } else {
+            loginGate.classList.remove('hidden');
+            passwordInput.focus();
+          }
+        }, 600);
+
+        // Submit listener for login
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const targetPass = 'V9#qL7!mX2@rT8$wK4^zN1&h';
+          if (passwordInput.value === targetPass) {
+            sessionStorage.setItem('tra_admin_authenticated', 'true');
+            loginGate.classList.add('hidden');
+            showWorkspace();
+          } else {
+            loginError.classList.remove('hidden');
+            passwordInput.classList.add('border-red-500');
+            passwordInput.focus();
+          }
+        });
+
+        // Logout listener
+        logoutBtn.addEventListener('click', () => {
+          sessionStorage.removeItem('tra_admin_authenticated');
+          adminWorkspace.classList.add('hidden');
+          headerControls.classList.add('hidden');
+          loginGate.classList.remove('hidden');
+          loginForm.reset();
+          loginError.classList.add('hidden');
+          passwordInput.classList.remove('border-red-500');
+          passwordInput.focus();
+        });
+
+        function showWorkspace() {
+          adminWorkspace.classList.remove('hidden');
+          headerControls.classList.remove('hidden');
+          loadLeadsAndStats();
+          loadMessages();
+        }
+      });
+
+      // 2. LEAD MANAGING WORKSPACE ENGINE
+      const sampleLeads = [
+        {
+          id: 'lead_1717951234000_xa8f2',
+          firstName: 'Marcus',
+          lastName: 'Davis',
+          phone: '(214) 555-0199',
+          email: 'marcus.davis@gmail.com',
+          zip: '75201',
+          city: 'Dallas',
+          state: 'Texas',
+          stateAbbr: 'TX',
+          projectType: 'New roof replacement',
+          roofSize: '2400',
+          material: 'Asphalt Composite Architectural',
+          timeline: 'ASAP - Active leaks / Claims',
+          createdAt: new Date(Date.now() - 3600000 * 2).toISOString() // 2 hours ago
+        },
+        {
+          id: 'lead_1717951234001_jb7g2',
+          firstName: 'Sarah',
+          lastName: 'Jenkins',
+          phone: '(312) 555-4811',
+          email: 'sjenkins30@outlook.com',
+          zip: '60611',
+          city: 'Chicago',
+          state: 'Illinois',
+          stateAbbr: 'IL',
+          projectType: 'New roof replacement',
+          roofSize: '3100',
+          material: 'Metal Standing Seam',
+          timeline: 'Within 1 month',
+          createdAt: new Date(Date.now() - 3600000 * 14).toISOString() // 14 hours ago
+        },
+        {
+          id: 'lead_1717951234002_ka9o4',
+          firstName: 'Elena',
+          lastName: 'Rodriguez',
+          phone: '(305) 555-2244',
+          email: 'e.rodriguez@yahoo.com',
+          zip: '33101',
+          city: 'Miami',
+          state: 'Florida',
+          stateAbbr: 'FL',
+          projectType: 'Roof repair',
+          roofSize: '1500',
+          material: 'Natural Slate or Clay tile',
+          timeline: 'ASAP - Active leaks / Claims',
+          createdAt: new Date(Date.now() - 3600000 * 25).toISOString() // 25 hours ago
+        },
+        {
+          id: 'lead_1717951234003_pd8c9',
+          firstName: 'David',
+          lastName: 'Miller',
+          phone: '(206) 555-9012',
+          email: 'davidmiller.seattle@gmail.com',
+          zip: '98101',
+          city: 'Seattle',
+          state: 'Washington',
+          stateAbbr: 'WA',
+          projectType: 'Roof repair',
+          roofSize: '800',
+          material: 'Flat Membrane / TPO',
+          timeline: 'Just researching',
+          createdAt: new Date(Date.now() - 3600000 * 48).toISOString() // 2 days ago
+        }
+      ];
+
+      // Safe State Map Fallback for USA Prefixes
+      function getFallbackState(zip) {
+        const d3 = parseInt((zip || '').trim().substring(0, 3), 10);
+        const d1 = (zip || '').trim().charAt(0);
+        
+        if (isNaN(d3)) return { state: "United States", abbr: "US" };
+        
+        if (d3 >= 10 && d3 <= 27) return { state: "Massachusetts", abbr: "MA" };
+        if (d3 >= 39 && d3 <= 49) return { state: "Maine", abbr: "ME" };
+        if (d3 >= 30 && d3 <= 38) return { state: "New Hampshire", abbr: "NH" };
+        if (d3 >= 50 && d3 <= 59) return { state: "Vermont", abbr: "VT" };
+        if (d3 >= 28 && d3 <= 29) return { state: "Rhode Island", abbr: "RI" };
+        if (d3 >= 60 && d3 <= 69) return { state: "Connecticut", abbr: "CT" };
+        if (d3 >= 70 && d3 <= 89) return { state: "New Jersey", abbr: "NJ" };
+        if (d3 >= 6 && d3 <= 9) return { state: "Puerto Rico", abbr: "PR" };
+        if (d1 === '1') return { state: "New York", abbr: "NY" };
+        if (d3 >= 150 && d3 <= 196) return { state: "Pennsylvania", abbr: "PA" };
+        if (d3 >= 197 && d3 <= 199) return { state: "Delaware", abbr: "DE" };
+        if (d3 >= 200 && d3 <= 205) return { state: "District of Columbia", abbr: "DC" };
+        if (d3 >= 206 && d3 <= 219) return { state: "Maryland", abbr: "MD" };
+        if (d3 >= 220 && d3 <= 246) return { state: "Virginia", abbr: "VA" };
+        if (d3 >= 247 && d3 <= 268) return { state: "West Virginia", abbr: "WV" };
+        if (d3 >= 270 && d3 <= 289) return { state: "North Carolina", abbr: "NC" };
+        if (d3 >= 290 && d3 <= 299) return { state: "South Carolina", abbr: "SC" };
+        if (d3 >= 300 && d3 <= 319) return { state: "Georgia", abbr: "GA" };
+        if (d3 >= 320 && d3 <= 349) return { state: "Florida", abbr: "FL" };
+        if (d3 >= 350 && d3 <= 369) return { state: "Alabama", abbr: "AL" };
+        if (d3 >= 386 && d3 <= 397) return { state: "Mississippi", abbr: "MS" };
+        if (d3 >= 370 && d3 <= 385) return { state: "Tennessee", abbr: "TN" };
+        if (d3 >= 400 && d3 <= 427) return { state: "Kentucky", abbr: "KY" };
+        if (d3 >= 430 && d3 <= 459) return { state: "Ohio", abbr: "OH" };
+        if (d3 >= 460 && d3 <= 479) return { state: "Indiana", abbr: "IN" };
+        if (d3 >= 480 && d3 <= 499) return { state: "Michigan", abbr: "MI" };
+        if (d3 >= 530 && d3 <= 549) return { state: "Wisconsin", abbr: "WI" };
+        if (d3 >= 550 && d3 <= 567) return { state: "Minnesota", abbr: "MN" };
+        if (d3 >= 500 && d3 <= 528) return { state: "Iowa", abbr: "IA" };
+        if (d3 >= 630 && d3 <= 658) return { state: "Missouri", abbr: "MO" };
+        if (d3 >= 580 && d3 <= 588) return { state: "North Dakota", abbr: "ND" };
+        if (d3 >= 570 && d3 <= 577) return { state: "South Dakota", abbr: "SD" };
+        if (d3 >= 680 && d3 <= 693) return { state: "Nebraska", abbr: "NE" };
+        if (d3 >= 660 && d3 <= 679) return { state: "Kansas", abbr: "KS" };
+        if (d3 >= 730 && d3 <= 749) return { state: "Oklahoma", abbr: "OK" };
+        if (d3 >= 716 && d3 <= 729) return { state: "Arkansas", abbr: "AR" };
+        if (d3 >= 700 && d3 <= 714) return { state: "Louisiana", abbr: "LA" };
+        if (d3 >= 750 && d3 <= 799) return { state: "Texas", abbr: "TX" };
+        if (d3 >= 800 && d3 <= 816) return { state: "Colorado", abbr: "CO" };
+        if (d3 >= 820 && d3 <= 831) return { state: "Wyoming", abbr: "WY" };
+        if (d3 >= 832 && d3 <= 838) return { state: "Idaho", abbr: "ID" };
+        if (d3 >= 840 && d3 <= 847) return { state: "Utah", abbr: "UT" };
+        if (d3 >= 890 && d3 <= 898) return { state: "Nevada", abbr: "NV" };
+        if (d3 >= 850 && d3 <= 865) return { state: "Arizona", abbr: "AZ" };
+        if (d3 >= 870 && d3 <= 884) return { state: "New Mexico", abbr: "NM" };
+        if (d1 === '9') {
+          if (d3 >= 900 && d3 <= 961) return { state: "California", abbr: "CA" };
+          if (d3 >= 970 && d3 <= 979) return { state: "Oregon", abbr: "OR" };
+          if (d3 >= 980 && d3 <= 994) return { state: "Washington", abbr: "WA" };
+          if (d3 >= 967 && d3 <= 968) return { state: "Hawaii", abbr: "HI" };
+          if (d3 >= 995 && d3 <= 999) return { state: "Alaska", abbr: "AK" };
+        }
+        return { state: "United States", abbr: "US" };
+      }
+
+      let activeLeads = [];
+
+      function loadLeadsAndStats() {
+        let stored = localStorage.getItem('tra_leads');
+        if (!stored) {
+          // No leads yet, instantiate the elite pre-populated samples
+          localStorage.setItem('tra_leads', JSON.stringify(sampleLeads));
+          activeLeads = [...sampleLeads];
+        } else {
+          try {
+            activeLeads = JSON.parse(stored);
+          } catch (e) {
+            activeLeads = [...sampleLeads];
+          }
+        }
+
+        // Make sure all leads have US mapping for State and City
+        activeLeads.forEach(lead => {
+          if (!lead.city || !lead.state) {
+            const fallback = getFallbackState(lead.zip);
+            lead.city = lead.city || "Localized Area";
+            lead.state = lead.state || fallback.state;
+            lead.stateAbbr = lead.stateAbbr || fallback.abbr;
+          }
+        });
+
+        calculateStats();
+        applyFiltersAndRender();
+      }
+
+      function calculateStats() {
+        const total = activeLeads.length;
+        document.getElementById('stat-total-leads').textContent = total;
+
+        // Urgent ASAP count
+        const urgent = activeLeads.filter(l => {
+          const t = (l.timeline || '').toLowerCase();
+          return t.includes('asap') || t.includes('emergency');
+        }).length;
+        document.getElementById('stat-urgent-leads').textContent = urgent;
+
+        // Estimate lead value volume (US standard $45 lead value)
+        const salesVolume = total * 45;
+        document.getElementById('stat-sales-volume').textContent = '$' + salesVolume.toLocaleString();
+
+        // Unique States Coverage count
+        const statesSet = new Set();
+        activeLeads.forEach(l => {
+          if (l.stateAbbr) statesSet.add(l.stateAbbr);
+        });
+        document.getElementById('stat-state-coverage').textContent = statesSet.size + (statesSet.size === 1 ? ' State' : ' States');
+      }
+
+      // Filter and Render UI Rows
+      const searchInput = document.getElementById('search-input');
+      const filterProject = document.getElementById('filter-project');
+      const filterTimeline = document.getElementById('filter-timeline');
+      const clearFiltersBtn = document.getElementById('btn-clear-filters');
+
+      searchInput.addEventListener('input', applyFiltersAndRender);
+      filterProject.addEventListener('change', applyFiltersAndRender);
+      filterTimeline.addEventListener('change', applyFiltersAndRender);
+      
+      clearFiltersBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterProject.value = 'all';
+        filterTimeline.value = 'all';
+        applyFiltersAndRender();
+      });
+
+      function applyFiltersAndRender() {
+        const query = searchInput.value.toLowerCase().trim();
+        const projectVal = filterProject.value;
+        const timelineVal = filterTimeline.value;
+
+        const filtered = activeLeads.filter(l => {
+          // Search query match
+          const zipMatch = (l.zip || '').includes(query);
+          const nameMatch = `${l.firstName || ''} ${l.lastName || ''}`.toLowerCase().includes(query);
+          const emailMatch = (l.email || '').toLowerCase().includes(query);
+          const phoneMatch = (l.phone || '').replace(/\D/g, '').includes(query.replace(/\D/g, ''));
+          const cityMatch = (l.city || '').toLowerCase().includes(query);
+          const stateMatch = (l.state || '').toLowerCase().includes(query);
+          
+          const searchOk = query === '' || zipMatch || nameMatch || emailMatch || phoneMatch || cityMatch || stateMatch;
+
+          // Project type match
+          let projectOk = true;
+          if (projectVal === 'replacement') {
+            projectOk = (l.projectType || '').toLowerCase().includes('replace');
+          } else if (projectVal === 'repair') {
+            projectOk = (l.projectType || '').toLowerCase().includes('repair');
+          } else if (projectVal === 'inspection') {
+            projectOk = (l.projectType || '').toLowerCase().includes('inspect') || (l.projectType || '').toLowerCase().includes('certify');
+          } else if (projectVal === 'exit') {
+            projectOk = (l.projectType || '').toLowerCase().includes('exit');
+          }
+
+          // Timeline match
+          let timelineOk = true;
+          if (timelineVal === 'asap') {
+            timelineOk = (l.timeline || '').toLowerCase().includes('asap') || (l.timeline || '').toLowerCase().includes('emergency');
+          } else if (timelineVal === 'month') {
+            timelineOk = (l.timeline || '').toLowerCase().includes('month');
+          } else if (timelineVal === 'researching') {
+            timelineOk = (l.timeline || '').toLowerCase().includes('research') || (l.timeline || '').toLowerCase().includes('not specified') || (l.timeline || '') === '';
+          }
+
+          return searchOk && projectOk && timelineOk;
+        });
+
+        renderLeads(filtered);
+      }
+
+      function renderLeads(leads) {
+        const tableBody = document.getElementById('leads-table-body');
+        tableBody.innerHTML = '';
+        
+        if (leads.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="9" class="px-6 py-12 text-center text-slate-500 font-medium">
+                <svg class="w-12 h-12 mx-auto text-slate-300 mb-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                No homeowner leads match the active search criteria.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        leads.forEach(lead => {
+          const dateFormatted = lead.createdAt ? new Date(lead.createdAt).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }) : 'N/A';
+
+          let timelinePill = '';
+          const timelineLower = (lead.timeline || '').toLowerCase();
+          if (timelineLower.includes('asap') || timelineLower.includes('emergency')) {
+            timelinePill = `<span class="px-2 py-0.5 text-[10px] font-bold font-mono bg-red-100 text-red-700 border border-red-200 rounded-full">ASAP / Emergency</span>`;
+          } else if (timelineLower.includes('month')) {
+            timelinePill = `<span class="px-2 py-0.5 text-[10px] font-bold font-mono bg-amber-100 text-amber-700 border border-amber-200 rounded-full">Within Month</span>`;
+          } else {
+            timelinePill = `<span class="px-2 py-0.5 text-[10px] font-bold font-mono bg-sky-100 text-sky-700 border border-sky-200 rounded-full">Researching</span>`;
+          }
+
+          const city = lead.city || 'Localized Area';
+          const stateAbbr = lead.stateAbbr || (lead.state ? lead.state.substring(0, 2).toUpperCase() : 'US');
+
+          const row = document.createElement('tr');
+          row.className = "hover:bg-slate-50/75 border-b border-slate-100 transition-colors duration-155 text-xs text-slate-700";
+          row.innerHTML = `
+            <td class="px-6 py-3.5 whitespace-nowrap">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7.5 h-7.5 rounded-full bg-primary/5 text-primary-light flex items-center justify-center font-bold text-xs uppercase shrink-0 border border-primary/10">
+                  ${(lead.firstName || 'H').charAt(0)}${(lead.lastName || 'O').charAt(0)}
+                </div>
+                <div>
+                  <span class="block text-slate-900 font-bold font-heading text-xs">${lead.firstName || 'Homeowner'} ${lead.lastName || ''}</span>
+                  <span class="block text-slate-400 text-[9px] font-mono leading-none">${lead.id.substring(5, 12)}...</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-bold font-mono text-slate-800">
+              <a href="tel:${lead.phone}" class="hover:text-accent flex items-center gap-1 transition-colors">
+                <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                ${lead.phone}
+              </a>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-medium text-slate-500">
+              <a href="mailto:${lead.email}" class="hover:underline hover:text-primary transition-colors flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                ${lead.email}
+              </a>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-semibold">
+              <span class="flex items-center gap-1.5">
+                <span class="px-1.5 py-0.5 bg-slate-100 text-slate-500 border border-slate-200 rounded font-mono text-[9px] font-bold text-center leading-none">${lead.zip}</span>
+                <span class="text-slate-850 truncate max-w-[140px]" title="${city}, ${lead.state}">${city}, ${stateAbbr}</span>
+              </span>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap capitalize font-medium text-slate-550 max-w-[140px] truncate" title="${lead.projectType || 'Full replacement'}">
+              ${lead.projectType || 'Full replacement'}
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-mono font-medium text-slate-500 text-[11px]">
+              ${lead.roofSize && lead.roofSize !== 'Not Specified' ? lead.roofSize + ' SQFT' : 'N/A'}
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap">
+              ${timelinePill}
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap text-slate-450 font-mono text-[10px]">
+              ${dateFormatted}
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button class="btn-view text-slate-500 hover:text-primary hover:bg-slate-100 p-1 rounded-md border border-slate-200 transition cursor-pointer" data-id="${lead.id}" title="Inspect Lead details">
+                  <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                </button>
+                <button class="btn-delete text-red-650 hover:bg-red-600 hover:text-white hover:border-red-600 p-1 rounded-md border border-red-155 transition cursor-pointer" data-id="${lead.id}" title="Remove lead">
+                  <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </div>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+
+        // Event hooks
+        tableBody.querySelectorAll('.btn-view').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const match = leads.find(l => l.id === id);
+            if (match) openDetailModal(match);
+          });
+        });
+
+        tableBody.querySelectorAll('.btn-delete').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            if (confirm('Are you strictly sure you want to permanently erase this homeowner lead parameters?')) {
+              deleteLead(id);
+            }
+          });
+        });
+      }
+
+      function openDetailModal(lead) {
+        const modal = document.getElementById('lead-modal');
+        const details = document.getElementById('lead-modal-details');
+
+        const city = lead.city || 'Localized Area';
+        const state = lead.state || 'United States';
+        const stateAbbr = lead.stateAbbr || 'US';
+
+        const rawTime = lead.createdAt ? new Date(lead.createdAt).toLocaleString() : 'N/A';
+
+        details.innerHTML = `
+          <div class="space-y-5 font-sans">
+            
+            <!-- Modal header description card -->
+            <div class="flex items-center gap-4 bg-primary-soft/50 -m-6 md:-m-8 p-6 md:p-8 border-b border-slate-100 rounded-t-3xl">
+              <div class="w-12 h-12 bg-primary text-white font-black rounded-xl flex items-center justify-center text-sm uppercase shrink-0 border border-primary-dark">
+                ${(lead.firstName || 'H').charAt(0)}${(lead.lastName || 'O').charAt(0)}
+              </div>
+              <div>
+                <h4 class="font-heading font-black text-slate-900 text-lg leading-tight uppercase tracking-tight">${lead.firstName || 'Homeowner'} ${lead.lastName || ''}</h4>
+                <p class="text-slate-450 text-[11px] font-mono mt-0.5">ESTIMATE RECORD ID: ${lead.id}</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div class="bg-slate-50 border border-slate-150 p-3.5 rounded-xl">
+                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Mobile Hotline</span>
+                <a href="tel:${lead.phone}" class="text-sm font-bold font-mono text-primary hover:text-accent transition flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                  ${lead.phone}
+                </a>
+              </div>
+              <div class="bg-slate-50 border border-slate-150 p-3.5 rounded-xl">
+                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Email Access Index</span>
+                <a href="mailto:${lead.email}" class="text-sm font-bold text-primary hover:underline transition flex items-center gap-1.5 truncate">
+                  <svg class="w-4 h-4 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  ${lead.email}
+                </a>
+              </div>
+            </div>
+
+            <!-- Regional parameters -->
+            <div class="border border-slate-150 rounded-2xl p-4.5 space-y-3 bg-white">
+              <span class="block text-[10px] font-bold uppercase tracking-widest text-primary font-heading border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.244a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Unified Geographic Location
+              </span>
+              <div class="grid grid-cols-3 gap-2 text-xs font-sans">
+                <div>
+                  <span class="block text-slate-400 text-[9px]">U.S. ZIP Code</span>
+                  <span class="font-bold font-mono text-slate-800">${lead.zip}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Calculated City</span>
+                  <span class="font-bold text-slate-800 truncate block">${city}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Calculated State</span>
+                  <span class="font-bold text-slate-800 truncate block">${state} (${stateAbbr})</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Construction parameters -->
+            <div class="border border-slate-150 rounded-2xl p-4.5 space-y-3 bg-white">
+              <span class="block text-[10px] font-bold uppercase tracking-widest text-primary font-heading border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
+                <svg class="w-4.5 h-4.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><path d="M9 17V9h6M9 13h4" /></svg>
+                Contractor Placement Criteria
+              </span>
+              <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-xs font-sans">
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Project Category</span>
+                  <span class="font-bold text-slate-800 capitalize block">${lead.projectType || 'Full roof replacement'}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Estimated Surface Area</span>
+                  <span class="font-bold font-mono text-slate-800 block">${lead.roofSize && lead.roofSize !== 'Not Specified' ? lead.roofSize + ' sq.ft.' : 'Not Specified'}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Shingle Style Preference</span>
+                  <span class="font-bold text-slate-800 block capitalize">${lead.material || 'Not Specified'}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Planned Timeline</span>
+                  <span class="font-bold text-slate-850 block">${lead.timeline || 'ASAP'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-slate-100 pt-3.5">
+              <span>CAPTURED FROM SECURE WEB PORTAL</span>
+              <span>TIMESTAMP: ${rawTime}</span>
+            </div>
+
+          </div>
+        `;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDetailModal() {
+        const modal = document.getElementById('lead-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('close-lead-modal-btn').addEventListener('click', closeDetailModal);
+      document.getElementById('btn-close-lead-modal-bottom').addEventListener('click', closeDetailModal);
+      document.querySelector('#lead-modal .modal-overlay').addEventListener('click', closeDetailModal);
+
+      // Delete Lead completely
+      function deleteLead(id) {
+        let leads = [];
+        try {
+          const stored = localStorage.getItem('tra_leads');
+          if (stored) leads = JSON.parse(stored);
+        } catch (e) {}
+
+        leads = leads.filter(l => l.id !== id);
+        localStorage.setItem('tra_leads', JSON.stringify(leads));
+        activeLeads = leads;
+        
+        calculateStats();
+        applyFiltersAndRender();
+      }
+
+      // ==========================================
+      // 3. CONTACT REQUEST MESSAGES ENGINE
+      // ==========================================
+      const sampleMessages = [
+        {
+          id: 'TRA-MSG-852140',
+          name: 'Robert Vance',
+          email: 'rvance@vancerefrigeration.com',
+          phone: '(570) 555-0150',
+          zip: '18503',
+          subject: 'Builder Partner Program',
+          message: 'We are a commercial and residential roofing company based in Scranton, PA. We would love to be listed as a verified builder partner on your directory.',
+          createdAt: new Date(Date.now() - 3600000 * 4).toISOString() // 4 hours ago
+        },
+        {
+          id: 'TRA-MSG-962157',
+          name: 'Melissa Thorne',
+          email: 'm.thorne@gmail.com',
+          phone: '(415) 555-2983',
+          zip: '94102',
+          subject: 'General Support',
+          message: 'Your roofing pitch multiplier calculator tool is super convenient! Is there an API or widget that I can embed on my own business website? Thanks!',
+          createdAt: new Date(Date.now() - 3600000 * 20).toISOString() // 20 hours ago
+        },
+        {
+          id: 'TRA-MSG-310492',
+          name: 'Arthur Pendelton',
+          email: 'pendelton.art@charter.net',
+          phone: '(313) 555-8711',
+          zip: '48201',
+          subject: 'Data Inquiry',
+          message: 'I noticed your slate shingle cost guide lists clay tile as slightly lower than natural slate, but in Michigan clay tiles actually run slightly higher due to local distributor cartages. Might be worth checking the regional multipliers!',
+          createdAt: new Date(Date.now() - 3600000 * 35).toISOString() // 35 hours ago
+        }
+      ];
+
+      let activeMessages = [];
+
+      function loadMessages() {
+        let storedMsgs = localStorage.getItem('tra_contact_messages');
+        if (!storedMsgs) {
+          // pre-populate with baseline messages
+          localStorage.setItem('tra_contact_messages', JSON.stringify(sampleMessages));
+          activeMessages = [...sampleMessages];
+        } else {
+          try {
+            activeMessages = JSON.parse(storedMsgs);
+          } catch (e) {
+            activeMessages = [...sampleMessages];
+          }
+        }
+        
+        // Ensure mapping for regional names
+        activeMessages.forEach(msg => {
+          if (!msg.city || !msg.state) {
+            const fallback = getFallbackState(msg.zip);
+            msg.city = msg.city || "Localized Area";
+            msg.state = msg.state || fallback.state;
+            msg.stateAbbr = msg.stateAbbr || fallback.abbr;
+          }
+        });
+
+        // Update counts
+        document.getElementById('badge-messages-count').textContent = activeMessages.length;
+        document.getElementById('badge-leads-count').textContent = activeLeads.length;
+
+        applyMessageFiltersAndRender();
+      }
+
+      // Message Filters
+      const messageSearchInput = document.getElementById('message-search-input');
+      const filterMessageSubject = document.getElementById('filter-message-subject');
+      const clearMessageFiltersBtn = document.getElementById('btn-clear-message-filters');
+
+      messageSearchInput.addEventListener('input', applyMessageFiltersAndRender);
+      filterMessageSubject.addEventListener('change', applyMessageFiltersAndRender);
+      
+      clearMessageFiltersBtn.addEventListener('click', () => {
+        messageSearchInput.value = '';
+        filterMessageSubject.value = 'all';
+        applyMessageFiltersAndRender();
+      });
+
+      function applyMessageFiltersAndRender() {
+        const query = messageSearchInput.value.toLowerCase().trim();
+        const subjectVal = filterMessageSubject.value;
+
+        const filtered = activeMessages.filter(m => {
+          const msgMatch = (m.message || '').toLowerCase().includes(query);
+          const zipMatch = (m.zip || '').includes(query);
+          const nameMatch = (m.name || '').toLowerCase().includes(query);
+          const emailMatch = (m.email || '').toLowerCase().includes(query);
+          const phoneMatch = (m.phone || '').replace(/\D/g, '').includes(query.replace(/\D/g, ''));
+          const subjectMatch = (m.subject || '').toLowerCase().includes(query);
+          const cityMatch = (m.city || '').toLowerCase().includes(query);
+          const stateMatch = (m.state || '').toLowerCase().includes(query);
+          
+          const searchOk = query === '' || msgMatch || zipMatch || nameMatch || emailMatch || phoneMatch || subjectMatch || cityMatch || stateMatch;
+          const subjectOk = subjectVal === 'all' || m.subject === subjectVal;
+
+          return searchOk && subjectOk;
+        });
+
+        renderMessages(filtered);
+      }
+
+      function renderMessages(messages) {
+        const tableBody = document.getElementById('messages-table-body');
+        tableBody.innerHTML = '';
+        
+        if (messages.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="7" class="px-6 py-12 text-center text-slate-500 font-medium">
+                <svg class="w-12 h-12 mx-auto text-slate-300 mb-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                No contact messages match the active search criteria.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        messages.forEach(msg => {
+          const dateFormatted = msg.createdAt ? new Date(msg.createdAt).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }) : 'N/A';
+
+          const city = msg.city || 'Localized Area';
+          const stateAbbr = msg.stateAbbr || (msg.state ? msg.state.substring(0, 2).toUpperCase() : 'US');
+
+          let subjectPillColor = 'bg-slate-100 text-slate-700 border-slate-205';
+          if (msg.subject === 'Builder Partner Program') {
+            subjectPillColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+          } else if (msg.subject === 'General Support') {
+            subjectPillColor = 'bg-sky-50 text-sky-700 border-sky-200';
+          } else if (msg.subject === 'Data Inquiry') {
+            subjectPillColor = 'bg-amber-50 text-amber-700 border-amber-200';
+          } else if (msg.subject === 'Privacy Concern') {
+            subjectPillColor = 'bg-red-50 text-red-700 border-red-205';
+          } else if (msg.subject === 'Advertising') {
+            subjectPillColor = 'bg-purple-50 text-purple-700 border-purple-200';
+          }
+
+          const row = document.createElement('tr');
+          row.className = "hover:bg-slate-50/75 border-b border-slate-100 transition-colors duration-155 text-xs text-slate-700";
+          row.innerHTML = `
+            <td class="px-6 py-3.5 whitespace-nowrap">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7.5 h-7.5 rounded-full bg-accent/10 text-primary flex items-center justify-center font-bold text-xs uppercase shrink-0 border border-accent/20">
+                  ${(msg.name || 'S').charAt(0)}
+                </div>
+                <div>
+                  <span class="block text-slate-900 font-bold font-heading text-xs">${msg.name || 'Sender'}</span>
+                  <span class="block text-slate-400 text-[9px] font-mono leading-none">${msg.id}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-bold font-mono text-slate-800">
+              ${msg.phone ? `
+                <a href="tel:${msg.phone}" class="hover:text-accent flex items-center gap-1 transition-colors">
+                  <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  ${msg.phone}
+                </a>
+              ` : '<span class="text-slate-400 font-normal">N/A</span>'}
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-medium text-slate-505">
+              <a href="mailto:${msg.email}" class="hover:underline hover:text-primary transition-colors flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                ${msg.email}
+              </a>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap">
+              <span class="px-2 py-0.5 text-[10px] font-bold font-mono ${subjectPillColor} border rounded-full">${msg.subject}</span>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap font-semibold">
+              <span class="flex items-center gap-1.5">
+                <span class="px-1.5 py-0.5 bg-slate-100 text-slate-500 border border-slate-205 rounded font-mono text-[9px] font-bold text-center leading-none">${msg.zip}</span>
+                <span class="text-slate-850 truncate max-w-[140px]" title="${city}, ${msg.state}">${city}, ${stateAbbr}</span>
+              </span>
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap text-slate-450 font-mono text-[10px]">
+              ${dateFormatted}
+            </td>
+            <td class="px-6 py-3.5 whitespace-nowrap text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button class="btn-view-msg text-slate-500 hover:text-primary hover:bg-slate-100 p-1 rounded-md border border-slate-205 transition cursor-pointer" data-id="${msg.id}" title="Inspect Message details">
+                  <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                </button>
+                <button class="btn-delete-msg text-red-650 hover:bg-red-650 hover:text-white hover:border-red-655 p-1 rounded-md border border-red-155 transition cursor-pointer" data-id="${msg.id}" title="Remove message">
+                  <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </div>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+
+        // Event hooks
+        tableBody.querySelectorAll('.btn-view-msg').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const match = messages.find(m => m.id === id);
+            if (match) openMessageDetailModal(match);
+          });
+        });
+
+        tableBody.querySelectorAll('.btn-delete-msg').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            if (confirm('Are you strictly sure you want to permanently delete this contact us message record?')) {
+              deleteMessage(id);
+            }
+          });
+        });
+      }
+
+      function openMessageDetailModal(msg) {
+        const modal = document.getElementById('lead-modal');
+        const details = document.getElementById('lead-modal-details');
+
+        const city = msg.city || 'Localized Area';
+        const state = msg.state || 'United States';
+        const stateAbbr = msg.stateAbbr || 'US';
+        const rawTime = msg.createdAt ? new Date(msg.createdAt).toLocaleString() : 'N/A';
+
+        details.innerHTML = `
+          <div class="space-y-5 font-sans">
+            
+            <!-- Modal header description card -->
+            <div class="flex items-center gap-4 bg-emerald-50/40 -m-6 md:-m-8 p-6 md:p-8 border-b border-slate-100 rounded-t-3xl">
+              <div class="w-12 h-12 bg-accent text-white font-black rounded-xl flex items-center justify-center text-sm uppercase shrink-0">
+                ${(msg.name || 'S').charAt(0)}
+              </div>
+              <div>
+                <h4 class="font-heading font-black text-slate-900 text-lg leading-tight uppercase tracking-tight">${msg.name || 'Sender'}</h4>
+                <p class="text-slate-450 text-[11px] font-mono mt-0.5">SUPPORT INQUIRY ID: ${msg.id}</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div class="bg-slate-50 border border-slate-150 p-3.5 rounded-xl">
+                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Phone Contact</span>
+                <a href="${msg.phone ? 'tel:' + msg.phone : '#'}" class="text-sm font-bold font-mono text-primary hover:text-accent transition flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                  ${msg.phone || 'Not Provided'}
+                </a>
+              </div>
+              <div class="bg-slate-50 border border-slate-150 p-3.5 rounded-xl">
+                <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Email Access Address</span>
+                <a href="mailto:${msg.email}" class="text-sm font-bold text-primary hover:underline transition flex items-center gap-1.5 truncate">
+                  <svg class="w-4 h-4 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  ${msg.email}
+                </a>
+              </div>
+            </div>
+
+            <!-- Regional parameters -->
+            <div class="border border-slate-150 rounded-2xl p-4.5 space-y-3 bg-white">
+              <span class="block text-[10px] font-bold uppercase tracking-widest text-primary font-heading border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.244a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Unified Geographic Location
+              </span>
+              <div class="grid grid-cols-3 gap-2 text-xs font-sans">
+                <div>
+                  <span class="block text-slate-400 text-[9px]">U.S. ZIP Code</span>
+                  <span class="font-bold font-mono text-slate-800">${msg.zip}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Calculated City</span>
+                  <span class="font-bold text-slate-800 truncate block">${city}</span>
+                </div>
+                <div>
+                  <span class="block text-slate-400 text-[9px]">Calculated State</span>
+                  <span class="font-bold text-slate-800 truncate block">${state} (${stateAbbr})</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Topic details -->
+            <div class="border border-slate-150 rounded-2xl p-4.5 space-y-3 bg-white">
+              <span class="block text-[10px] font-bold uppercase tracking-widest text-primary font-heading border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
+                <svg class="w-4.5 h-4.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                Inquiry Topic
+              </span>
+              <span class="px-2.5 py-1 text-xs font-bold font-mono bg-accent/10 text-primary border border-primary/20 rounded-md inline-block font-sans">
+                ${msg.subject || 'General Inquiry'}
+              </span>
+            </div>
+
+            <!-- Message details -->
+            <div class="border border-slate-150 rounded-2xl p-4.5 space-y-3 bg-white">
+              <span class="block text-[10px] font-bold uppercase tracking-widest text-primary font-heading border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
+                <svg class="w-4.5 h-4.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                Full Message Text
+              </span>
+              <p class="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-100 max-h-[220px] overflow-y-auto whitespace-pre-wrap font-sans">
+                ${msg.message || 'No details provided.'}
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-slate-100 pt-3.5">
+              <span>CAPTURED FROM CONTACT US FORM</span>
+              <span>TIMESTAMP: ${rawTime}</span>
+            </div>
+
+          </div>
+        `;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function deleteMessage(id) {
+        let msgs = [];
+        try {
+          const stored = localStorage.getItem('tra_contact_messages');
+          if (stored) msgs = JSON.parse(stored);
+        } catch (e) {}
+
+        msgs = msgs.filter(m => m.id !== id);
+        localStorage.setItem('tra_contact_messages', JSON.stringify(msgs));
+        activeMessages = msgs;
+        
+        loadMessages();
+      }
+
+      // Tab selector controller
+      let currentTab = 'leads';
+      const tabBtnLeads = document.getElementById('tab-btn-leads');
+      const tabBtnMessages = document.getElementById('tab-btn-messages');
+      const leadsViewContainer = document.getElementById('leads-view-container');
+      const messagesViewContainer = document.getElementById('messages-view-container');
+
+      tabBtnLeads.addEventListener('click', () => {
+        currentTab = 'leads';
+        
+        // Active styles for Leads Tab
+        tabBtnLeads.className = "border-b-2 border-accent text-accent font-bold pb-4 px-6 text-sm flex items-center gap-2 transition duration-155 cursor-pointer";
+        tabBtnMessages.className = "border-b-2 border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-350 font-semibold pb-4 px-6 text-sm flex items-center gap-2 transition duration-155 cursor-pointer";
+        
+        // Toggle visibility
+        leadsViewContainer.classList.remove('hidden');
+        messagesViewContainer.classList.add('hidden');
+      });
+
+      tabBtnMessages.addEventListener('click', () => {
+        currentTab = 'messages';
+        
+        // Active styles for Messages Tab
+        tabBtnLeads.className = "border-b-2 border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-350 font-semibold pb-4 px-6 text-sm flex items-center gap-2 transition duration-155 cursor-pointer";
+        tabBtnMessages.className = "border-b-2 border-accent text-accent font-bold pb-4 px-6 text-sm flex items-center gap-2 transition duration-155 cursor-pointer";
+        
+        // Toggle visibility
+        leadsViewContainer.classList.add('hidden');
+        messagesViewContainer.classList.remove('hidden');
+        
+        // Refresh messages view
+        loadMessages();
+      });
+
+
+      // Restore Seed Samples
+      document.getElementById('btn-demo-seed').addEventListener('click', () => {
+        if (currentTab === 'leads') {
+          if (confirm('Do you want to restore the USA baseline sample leads in database for demonstration?')) {
+            localStorage.setItem('tra_leads', JSON.stringify(sampleLeads));
+            loadLeadsAndStats();
+          }
+        } else {
+          if (confirm('Do you want to restore the baseline contact messages in database for demonstration?')) {
+            localStorage.setItem('tra_contact_messages', JSON.stringify(sampleMessages));
+            loadMessages();
+          }
+        }
+      });
+
+      // Clear database
+      document.getElementById('btn-reset-leads').addEventListener('click', () => {
+        if (currentTab === 'leads') {
+          if (confirm('ARE YOU STRICTLY SURE? This will permanently wipe all captured homeowner leads in localStorage database.')) {
+            localStorage.setItem('tra_leads', JSON.stringify([]));
+            loadLeadsAndStats();
+          }
+        } else {
+          if (confirm('ARE YOU STRICTLY SURE? This will permanently wipe all support and contact messages in localStorage database.')) {
+            localStorage.setItem('tra_contact_messages', JSON.stringify([]));
+            loadMessages();
+          }
+        }
+      });
+
+      // Download CSV
+      document.getElementById('btn-export-csv').addEventListener('click', () => {
+        if (currentTab === 'leads') {
+          if (activeLeads.length === 0) {
+            alert('No leads available in database to export.');
+            return;
+          }
+
+          const headers = ['Lead ID', 'First Name', 'Last Name', 'Phone', 'Email', 'ZIP', 'City', 'State', 'State Abbr', 'Request Service', 'Roof Size SQFT', 'Material Pref', 'Timeline', 'Date Captured'];
+          const rows = activeLeads.map(lead => {
+            const city = lead.city || 'Localized Area';
+            const state = lead.state || 'United States';
+            const stateAbbr = lead.stateAbbr || 'US';
+            return [
+              lead.id,
+              `"${(lead.firstName || '').replace(/"/g, '""')}"`,
+              `"${(lead.lastName || '').replace(/"/g, '""')}"`,
+              `"${(lead.phone || '').replace(/"/g, '""')}"`,
+              `"${(lead.email || '').replace(/"/g, '""')}"`,
+              `"${(lead.zip || '').replace(/"/g, '""')}"`,
+              `"${city.replace(/"/g, '""')}"`,
+              `"${state.replace(/"/g, '""')}"`,
+              `"${stateAbbr.replace(/"/g, '""')}"`,
+              `"${(lead.projectType || '').replace(/"/g, '""')}"`,
+              lead.roofSize || 'Not Specified',
+              `"${(lead.material || '').replace(/"/g, '""')}"`,
+              `"${(lead.timeline || '').replace(/"/g, '""')}"`,
+              lead.createdAt || ''
+            ];
+          });
+
+          const csvContent = "data:text/csv;charset=utf-8," 
+            + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+            
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", `roof_advisor_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+          document.body.appendChild(link);
+          
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          if (activeMessages.length === 0) {
+            alert('No contact messages available in database to export.');
+            return;
+          }
+
+          const headers = ['Message ID', 'Sender Name', 'Email Address', 'Phone Contact', 'ZIP Code', 'Calculated City', 'Calculated State', 'Inquiry Topic', 'Message Content', 'Date Received'];
+          const rows = activeMessages.map(msg => {
+            const city = msg.city || 'Localized Area';
+            const state = msg.state || 'United States';
+            return [
+              msg.id,
+              `"${(msg.name || '').replace(/"/g, '""')}"`,
+              `"${(msg.email || '').replace(/"/g, '""')}"`,
+              `"${(msg.phone || '').replace(/"/g, '""')}"`,
+              `"${(msg.zip || '').replace(/"/g, '""')}"`,
+              `"${city.replace(/"/g, '""')}"`,
+              `"${state.replace(/"/g, '""')}"`,
+              `"${(msg.subject || '').replace(/"/g, '""')}"`,
+              `"${(msg.message || '').replace(/"/g, '""').replace(/\n/g, ' ')}"`,
+              msg.createdAt || ''
+            ];
+          });
+
+          const csvContent = "data:text/csv;charset=utf-8," 
+            + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+            
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", `roof_advisor_contact_messages_${new Date().toISOString().slice(0, 10)}.csv`);
+          document.body.appendChild(link);
+          
+          link.click();
+          document.body.removeChild(link);
+        }
+      });
+    </script>
+
+  </body>
+</html>

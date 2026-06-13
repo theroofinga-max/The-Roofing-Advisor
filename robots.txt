@@ -1,0 +1,19 @@
+# Robots.txt for TheRoofingAdvisor.com - Optimizing Search indexing behavior
+# -------------------------------------------------------------
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /roofing-cost-calculator/
+Allow: /cost-guides.html
+Allow: /how-much-does-a-new-roof-cost.html
+Allow: /get-estimates.html
+Allow: /contact.html
+
+# Prevent duplicate indexing of system scripts or asset variables
+Disallow: /node_modules/
+Disallow: /*?match=*
+Disallow: /*?success=*
+
+# Specify canonical Sitemap index
+Sitemap: https://theroofingadvisor.com/sitemap.xml

@@ -1,0 +1,6 @@
+{
+  "name": "The Roofing Advisor",
+  "description": "US-focused roofing cost calculator, local price guides, and compliant contractor direct estimate connector.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
