@@ -1,6 +1,36 @@
 import fs from 'fs';
 import path from 'path';
 
+// Extract assets from dist/index.html if it exists and is post-build execution
+const isPostBuild = process.argv.includes('--post-build');
+
+let faviconTag = '<link rel="icon" type="image/svg+xml" href="ROOT_PREFIX_PLACEHOLDERfavicon.svg" />';
+let scriptTags = '<script type="module" src="ROOT_PREFIX_PLACEHOLDERscript.js"></script>';
+let stylesheetTags = '<link rel="stylesheet" href="ROOT_PREFIX_PLACEHOLDERstyles.css" />';
+
+const distIndexPath = path.resolve(process.cwd(), 'dist/index.html');
+if (isPostBuild && fs.existsSync(distIndexPath)) {
+  const indexHtml = fs.readFileSync(distIndexPath, 'utf-8');
+  
+  // Extract exact Favicon tag
+  const favMatch = indexHtml.match(/<link\s+[^>]*rel="icon"[^>]*>/i);
+  if (favMatch) {
+    faviconTag = favMatch[0];
+  }
+  
+  // Extract exact script tags
+  const scriptMatches = indexHtml.match(/<script\s+[^>]*src="[^"]+assets\/[^"]+\.js"[^>]*><\/script>/gi);
+  if (scriptMatches) {
+    scriptTags = scriptMatches.join('\n    ');
+  }
+  
+  // Extract exact CSS link tag(s)
+  const cssMatches = indexHtml.match(/<link\s+[^>]*href="[^"]+assets\/[^"]+\.css"[^>]*>/gi);
+  if (cssMatches) {
+    stylesheetTags = cssMatches.join('\n    ');
+  }
+}
+
 // Define target SEO pages list with custom headlines, pricing data, schemas, and calculator logic
 const pages = [
   // --- MAIN COST GUIDES ---
@@ -3379,6 +3409,10 @@ allFiftyStates.filter(state => !state.isCustomArticle).forEach(state => {
 function getHtmlTemplate(page) {
   const rootPrefix = page.dir.includes('/') ? '../../' : '../';
 
+  const resolvedFaviconTag = faviconTag.replaceAll('ROOT_PREFIX_PLACEHOLDER', rootPrefix);
+  const resolvedStylesheetTag = stylesheetTags.replaceAll('ROOT_PREFIX_PLACEHOLDER', rootPrefix);
+  const resolvedScriptTags = scriptTags.replaceAll('ROOT_PREFIX_PLACEHOLDER', rootPrefix);
+
   // Dynamic Schema Generation Grouping
   let breadcrumbList = [];
   let pageSchemaObj = {};
@@ -3763,8 +3797,8 @@ function getHtmlTemplate(page) {
     <meta property="og:url" content="https://theroofingadvisor.com/${page.dir}/" />
     <meta property="og:site_name" content="The Roofing Advisor" />
     
-    <link rel="stylesheet" href="${rootPrefix}styles.css" />
-    <link rel="icon" type="image/svg+xml" href="${rootPrefix}favicon.svg" />
+    ${resolvedStylesheetTag}
+    ${resolvedFaviconTag}
 
     <!-- Schema JSON-LD (Dynamic BreadcrumbList & Specific Template Entity) -->
     <script type="application/ld-json">
@@ -4109,7 +4143,7 @@ ${pageSchemaJson}
     </div>
 
     <!-- Application JavaScript Engine -->
-    <script type="module" src="${rootPrefix}script.js"></script>
+    ${resolvedScriptTags}
 
   </body>
 </html>`;
@@ -4117,17 +4151,30 @@ ${pageSchemaJson}
 
 // Ensure target directories exist and file is saved
 pages.forEach(page => {
-  const dirPath = path.resolve(process.cwd(), page.dir);
-  
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-
-  const filePath = path.join(dirPath, 'index.html');
   const htmlContent = getHtmlTemplate(page);
-  
-  fs.writeFileSync(filePath, htmlContent, 'utf-8');
-  console.log(`Successfully generated dynamic SEO index page: ${filePath}`);
+
+  if (isPostBuild) {
+    // Write ONLY to the dist/ output subdirectory
+    const distDir = path.resolve(process.cwd(), 'dist');
+    if (fs.existsSync(distDir)) {
+      const distPageDir = path.join(distDir, page.dir);
+      if (!fs.existsSync(distPageDir)) {
+        fs.mkdirSync(distPageDir, { recursive: true });
+      }
+      const distFilePath = path.join(distPageDir, 'index.html');
+      fs.writeFileSync(distFilePath, htmlContent, 'utf-8');
+      console.log(`[Post-build] Successfully synchronized dynamic SEO index page with hashed assets: ${distFilePath}`);
+    }
+  } else {
+    // Write to local source directory
+    const dirPath = path.resolve(process.cwd(), page.dir);
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+    const filePath = path.join(dirPath, 'index.html');
+    fs.writeFileSync(filePath, htmlContent, 'utf-8');
+    console.log(`Successfully generated dynamic SEO index page: ${filePath}`);
+  }
 });
 
 // Synchronize the header of the homepage to all other static HTML files
